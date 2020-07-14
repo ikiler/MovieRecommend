@@ -28,4 +28,28 @@ case class MovieRects(mid: Int, recs: Seq[Recommendation])
 
 class offRecommender {
 
+  val  RATE_MORE_MOVIES = "RatiemoreMovies"
+  val RATE_MORE_RENCETLY_MOVIES = "RatemoreRecentlyMovies"
+  val AVEAGE_MOVIES = "AvgMovies"
+  val GENRES_TOP_MOVIES = "GenresTopMovies"
+
+  def main(args: Array[String]): Unit = {
+    val config = Map(
+      "saprk.cores" -> "local[*]",
+      "mongo.uri" -> "mongodb://airke.top:27017/recommender",
+      "mongo.db" -> "recommender"
+    )
+    implicit val mongoConfig = MongoConfig(config("mongo.uri"), config("mongo.db"))
+    //    创建sparkconf
+    val sparkConf = new SparkConf()
+      .setMaster(config("saprk.cores"))
+      .setAppName("Recommender")
+
+    //    创建sparksession
+    val sparkSession = SparkSession.builder().config(sparkConf).getOrCreate()
+    import sparkSession.implicits._
+
+  }
+
+
 }
